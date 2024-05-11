@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import './chat.scss'
 
 const Chat = () => {
+
+    const [chat,setChat] = useState(null);
+    
   return (
     <div className='chat'>
         <div className="messages">
@@ -31,9 +35,54 @@ const Chat = () => {
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt, enim.</p>
             </div>
         </div>
-        <div className="chatBox">
+        {chat && <div className="chatBox">
+                <div className="top">
+                    <div className="user">
+                        <img src="/logo.png" alt="" />
+                        Pesho
+                    </div>
+                    <span className='close' onClick={()=> setChat(null)}>X</span>
+                </div>
+                <div className="center">
+                    <div className="chatMessage">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                        <span>1hr ago</span>
+                    </div>
+                    <div className="chatMessage own">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                        <span>1hr ago</span>
+                    </div>
+                    <div className="chatMessage">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                        <span>1hr ago</span>
+                    </div>
+                    <div className="chatMessage own">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                        <span>1hr ago</span>
+                    </div>
+                    <div className="chatMessage">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                        <span>1hr ago</span>
+                    </div>
+                    <div className="chatMessage own">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                        <span>1hr ago</span>
+                    </div>
+                    <div className="chatMessage">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                        <span>1hr ago</span>
+                    </div>
+                    <div className="chatMessage own">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                        <span>1hr ago</span>
+                    </div>
+                </div>
+                <div className="bottom">
+                    <textarea></textarea>
+                    <button>Send</button>
+                </div>
 
-        </div>
+        </div>}
     </div>
   )
 }
