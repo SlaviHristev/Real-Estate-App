@@ -6,6 +6,7 @@ import List from './pages/list/List'
 import Login from './pages/login/Login'
 import SinglePage from './pages/singlePage/SinglePage'
 import Profile from './pages/profile/Profile'
+import Register from './pages/register/Register'
 
 function App() {
 
@@ -35,7 +36,12 @@ function App() {
         {
           path:'/profile',
           element:<Profile/>
-        }
+        },
+        {
+          path:'/register',
+          element:<Register/>
+        },
+
       ]
     },
   ])
