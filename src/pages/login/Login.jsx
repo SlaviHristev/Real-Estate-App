@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 import './login.scss'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import apiRequest from '../../lib/apiRequest.js';
+import { AuthContext } from '../../context/AuthContext.jsx';
 
 const Login = () => {
 
+  const {updateUser} = useContext(AuthContext);
   const [error,setError] = useState('');
   const [isLoading,setIsLoading] = useState(false);
 
@@ -20,7 +22,6 @@ const Login = () => {
       const formData = new FormData(e.target);
 
       const username = formData.get('username');
-      const email = formData.get('email');
       const password = formData.get('password');
 
       try {
@@ -28,7 +29,7 @@ const Login = () => {
               username,password
           });
 
-          localStorage.setItem('user', JSON.stringify(res.data))
+          updateUser(res.data)
 
           navigate('/');
       } catch (err) {

@@ -3,20 +3,30 @@ import Chat from '../../components/chat/Chat'
 import apiRequest from '../../lib/apiRequest.js'
 import List from '../list/List'
 import './profile.scss'
+import { useContext, useEffect } from 'react'
+import { AuthContext } from '../../context/AuthContext.jsx'
 
 const Profile = () => {
+    const {updateUser,currentUser} = useContext(AuthContext);
     const navigate = useNavigate();
+
+    useEffect(() =>{
+        if(!currentUser){
+            navigate('/login')
+        }
+    },[currentUser,navigate])
+
     const handleLogout = async () =>{
         try {
-            const res = await apiRequest.post('/auth/logout');
-            localStorage.removeItem('user');
+            await apiRequest.post('/auth/logout');
+            updateUser(null)
             navigate('/');
         } catch (error) {
             console.log(error);
         }
     }
   return (
-    <div className='profile'>
+    currentUser && (<div className='profile'>
         <div className="details">
             <div className="wrapper">
                 <div className="title">
@@ -24,9 +34,9 @@ const Profile = () => {
                     <button>Update Profile</button>
                 </div>
                 <div className="info">
-                    <span>Avatar : <img src="/logo.png" alt="" /></span>
-                    <span>Username: <b>Slavi</b></span>
-                    <span>Email: <b>Slavihristev97@gmail.com</b></span>
+                    <span>Avatar : <img src={currentUser.avatar || '/noavatar.jpg'} alt="" /></span>
+                    <span>Username: <b>{currentUser.username}</b></span>
+                    <span>Email: <b>{currentUser.email}</b></span>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
                 <div className="title">
@@ -45,7 +55,7 @@ const Profile = () => {
                 <Chat/>
             </div>
         </div>
-    </div>
+    </div>)
   )
 }
 
