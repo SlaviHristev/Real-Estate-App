@@ -3,20 +3,15 @@ import Chat from '../../components/chat/Chat'
 import apiRequest from '../../lib/apiRequest.js'
 import List from '../list/List'
 import './profile.scss'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext.jsx'
 
 const Profile = () => {
-    const {updateUser,currentUser} = useContext(AuthContext);
+    const { updateUser, currentUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    useEffect(() =>{
-        if(!currentUser){
-            navigate('/login')
-        }
-    },[currentUser,navigate])
 
-    const handleLogout = async () =>{
+    const handleLogout = async () => {
         try {
             await apiRequest.post('/auth/logout');
             updateUser(null)
@@ -25,38 +20,38 @@ const Profile = () => {
             console.log(error);
         }
     }
-  return (
-    currentUser && (<div className='profile'>
-        <div className="details">
-            <div className="wrapper">
-                <div className="title">
-                    <h1>User Information</h1>
-                    <button>Update Profile</button>
+    return (
+        <div className='profile'>
+            <div className="details">
+                <div className="wrapper">
+                    <div className="title">
+                        <h1>User Information</h1>
+                        <button>Update Profile</button>
+                    </div>
+                    <div className="info">
+                        <span>Avatar : <img src={currentUser.avatar || '/noavatar.jpg'} alt="" /></span>
+                        <span>Username: <b>{currentUser.username}</b></span>
+                        <span>Email: <b>{currentUser.email}</b></span>
+                        <button onClick={handleLogout}>Logout</button>
+                    </div>
+                    <div className="title">
+                        <h1>My list</h1>
+                        <button>Create New Post</button>
+                    </div>
+                    <List />
+                    <div className="title">
+                        <h1>Saved Lists</h1>
+                    </div>
+                    <List />
                 </div>
-                <div className="info">
-                    <span>Avatar : <img src={currentUser.avatar || '/noavatar.jpg'} alt="" /></span>
-                    <span>Username: <b>{currentUser.username}</b></span>
-                    <span>Email: <b>{currentUser.email}</b></span>
-                    <button onClick={handleLogout}>Logout</button>
+            </div>
+            <div className="chatContainer">
+                <div className="wrapper">
+                    <Chat />
                 </div>
-                <div className="title">
-                    <h1>My list</h1>
-                    <button>Create New Post</button>
-                </div>
-                <List/>
-                <div className="title">
-                    <h1>Saved Lists</h1>
-                </div>
-                <List/>
             </div>
         </div>
-        <div className="chatContainer">
-            <div className="wrapper">
-                <Chat/>
-            </div>
-        </div>
-    </div>)
-  )
+    )
 }
 
 export default Profile
