@@ -7,6 +7,8 @@ import Login from './pages/login/Login'
 import SinglePage from './pages/singlePage/SinglePage'
 import Profile from './pages/profile/Profile'
 import Register from './pages/register/Register'
+import ProfileUpdate from './pages/profileUpdate/profileUpdate'
+
 
 function App() {
 
@@ -48,6 +50,10 @@ function App() {
         {
           path:'/profile',
           element:<Profile/>
+        },
+        {
+          path:'/profile/update',
+          element:<ProfileUpdate/>
         },
       ]
     }

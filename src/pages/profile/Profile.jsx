@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Chat from '../../components/chat/Chat'
 import apiRequest from '../../lib/apiRequest.js'
 import List from '../list/List'
@@ -26,7 +26,10 @@ const Profile = () => {
                 <div className="wrapper">
                     <div className="title">
                         <h1>User Information</h1>
+                        <Link to='/profile/update'>
                         <button>Update Profile</button>
+                        
+                        </Link>
                     </div>
                     <div className="info">
                         <span>Avatar : <img src={currentUser.avatar || '/noavatar.jpg'} alt="" /></span>
