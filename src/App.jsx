@@ -8,6 +8,7 @@ import SinglePage from './pages/singlePage/SinglePage'
 import Profile from './pages/profile/Profile'
 import Register from './pages/register/Register'
 import ProfileUpdate from './pages/profileUpdate/ProfileUpdate'
+import CreatePost from './pages/createPost/CreatePost'
 
 
 
@@ -55,6 +56,10 @@ function App() {
         {
           path: '/profile/update',
           element: <ProfileUpdate />
+        },
+        {
+          path: '/add',
+          element: <CreatePost />
         },
       ]
     }

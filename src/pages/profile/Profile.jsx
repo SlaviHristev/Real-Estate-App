@@ -27,8 +27,8 @@ const Profile = () => {
                     <div className="title">
                         <h1>User Information</h1>
                         <Link to='/profile/update'>
-                        <button>Update Profile</button>
-                        
+                            <button>Update Profile</button>
+
                         </Link>
                     </div>
                     <div className="info">
@@ -39,7 +39,9 @@ const Profile = () => {
                     </div>
                     <div className="title">
                         <h1>My list</h1>
-                        <button>Create New Post</button>
+                        <Link to='/add'>
+                            <button>Create New Post</button>
+                        </Link>
                     </div>
                     <List />
                     <div className="title">

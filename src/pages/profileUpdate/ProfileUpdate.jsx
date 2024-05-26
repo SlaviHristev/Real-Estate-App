@@ -9,7 +9,7 @@ import UploadWidget from '../../components/uploadWidget/UploadWidget';
 const ProfileUpdate = () => {
     const { currentUser, updateUser } = useContext(AuthContext);
     const [error, setError] = useState('');
-    const [avatar,setAvatar] = useState(currentUser.avatar)
+    const [avatar,setAvatar] = useState([])
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -18,7 +18,7 @@ const ProfileUpdate = () => {
 
         const { username, email, password } = Object.fromEntries(formData);
         try {
-            const res = await apiRequest.put(`/users/${currentUser.id}`, { username, email, password, avatar });
+            const res = await apiRequest.put(`/users/${currentUser.id}`, { username, email, password, avatar: avatar[0] });
             updateUser(res.data);
             navigate('/profile')
         } catch (err) {
@@ -48,7 +48,7 @@ const ProfileUpdate = () => {
                 </form>
             </div>
             <div className="sideContainer">
-                <img src={avatar || '/noavatar.jpg'} alt="" className='avatar' />
+                <img src={avatar[0] || currentUser.avatar || '/noavatar.jpg'} alt="" className='avatar' />
                 <UploadWidget uwConfig={{
                     cloudName: 'dknpnmf1m',
                     uploadPreset: "estate",
@@ -56,7 +56,7 @@ const ProfileUpdate = () => {
                     maxImageFileSize: 2000000,
                     folder: "avatars"
                 }} 
-                setAvatar={setAvatar}
+                setState={setAvatar}
                 />
             </div>
         </div>
