@@ -9,7 +9,7 @@ import Profile from './pages/profile/Profile'
 import Register from './pages/register/Register'
 import ProfileUpdate from './pages/profileUpdate/ProfileUpdate'
 import CreatePost from './pages/createPost/CreatePost'
-import { singlePageLoader } from './lib/loaders'
+import { listPageLoader, singlePageLoader } from './lib/loaders'
 
 
 
@@ -27,8 +27,9 @@ function App() {
           element: <Home />
         },
         {
-          path: '/list',
-          element: <List />
+          path: "/list",
+          element: <List />,
+          loader: listPageLoader,
         },
         {
           path: '/login',

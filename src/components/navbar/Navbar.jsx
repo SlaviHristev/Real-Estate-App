@@ -7,7 +7,6 @@ const Navbar = () => {
     const {currentUser} = useContext(AuthContext);
     const [open, setOpen] = useState(false);
 
-    console.log(currentUser);
     return (
         <nav>
             <div className="left">
