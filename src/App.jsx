@@ -9,6 +9,7 @@ import Profile from './pages/profile/Profile'
 import Register from './pages/register/Register'
 import ProfileUpdate from './pages/profileUpdate/ProfileUpdate'
 import CreatePost from './pages/createPost/CreatePost'
+import { singlePageLoader } from './lib/loaders'
 
 
 
@@ -35,7 +36,8 @@ function App() {
         },
         {
           path: '/:id',
-          element: <SinglePage />
+          element: <SinglePage />,
+          loader: singlePageLoader,
         },
 
         {
