@@ -9,7 +9,7 @@ import Profile from './pages/profile/Profile'
 import Register from './pages/register/Register'
 import ProfileUpdate from './pages/profileUpdate/ProfileUpdate'
 import CreatePost from './pages/createPost/CreatePost'
-import { listPageLoader, singlePageLoader } from './lib/loaders'
+import { listPageLoader, profilePageLoader, singlePageLoader } from './lib/loaders'
 
 
 
@@ -54,7 +54,8 @@ function App() {
       children: [
         {
           path: '/profile',
-          element: <Profile />
+          element: <Profile />,
+          loader: profilePageLoader
         },
         {
           path: '/profile/update',
