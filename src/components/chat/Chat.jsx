@@ -3,11 +3,13 @@ import './chat.scss'
 import { AuthContext } from '../../context/AuthContext';
 import apiRequest from '../../lib/apiRequest';
 import { format } from 'timeago.js';
+import { SocketContext } from '../../context/SocketContext';
 
 const Chat = ({ chats }) => {
 
     const [chat, setChat] = useState(null);
     const { currentUser } = useContext(AuthContext);
+    const { socket } = useContext(SocketContext);
 
     const handleOpenChat = async (id, receiver) => {
         try {
