@@ -18,13 +18,19 @@ const addUser = (userId,socketId) =>{
 }
 
 const removeUser = (socketId) =>{
-    onlineUser = onlineUser.filter((user) => user.socketId !== socketId)
+    onlineUser = onlineUser.filter((user) => user.socketId !== socketId);
+}
+
+const getUser = (userId) =>{
+    return onlineUser.find(user => user.userId === userId)
 }
 io.on("connection", (socket) =>{
     
     socket.on("newUser", (userId) =>{
         addUser(userId, socket.id)
-    })
+    });
+
+    socket.on('sendMessage', {receiverId, data})
 
     socket.on("disconnect", () =>{
         removeUser(socket.id)
