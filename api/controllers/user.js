@@ -135,3 +135,26 @@ export const profilePosts = async (req, res) => {
     }
   };
   
+  export const getNotificationNumber = async (req, res) => {
+    const tokenUserId = req.userId;
+    try {
+        const numberChats = await prisma.chat.count({
+            where:{
+                userIds:{
+                    hasSome:[tokenUserId]
+                },
+                NOT:{
+                    seenBy:{
+                        hasSome:[tokenUserId]
+                    }
+                }
+            }
+        })
+      res.status(200).json(numberChats);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Failed to get number of chats!" });
+    }
+  };
+  
+  
