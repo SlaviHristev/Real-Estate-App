@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import './chat.scss'
 import { AuthContext } from '../../context/AuthContext';
 import apiRequest from '../../lib/apiRequest';
@@ -38,6 +38,25 @@ const Chat = ({ chats }) => {
         }
     }
 
+    useEffect(() =>{
+        const read =  async () =>{
+            try {
+                await apiRequest.put('/chats/read/' + chat.id)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        if(chat &&socket){
+            socket.on('getMessage',(data) =>{
+                if(chat.id === data.chatId){
+                    setChat(prev =>({...prev, messages:[...prev.messages, data]}));
+                    read();
+                }
+            })
+        }
+    },[chat,socket])
+
     return (
         <div className='chat'>
             <div className="messages">
@@ -45,7 +64,7 @@ const Chat = ({ chats }) => {
                 {
                     chats?.map((c) => (
                         <div className="message" key={c.id}
-                            style={{ backgroundColor: c.seenBy.includes(currentUser.id) ? "white" : "#fecd514e" }}
+                            style={{ backgroundColor: c.seenBy.includes(currentUser.id) || chat?.id === c.id ? "white" : "#fecd514e" }}
                             onClick={() => handleOpenChat(c.id, c.receiver)}>
                             <img src={c.receiver.avatar || '/noavatar.jpg'} alt="" />
                             <span>{c.receiver.username}</span>
