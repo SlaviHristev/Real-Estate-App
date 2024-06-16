@@ -51,24 +51,27 @@ const Chat = ({ chats }) => {
         }
     }
 
-    useEffect(() =>{
-        const read =  async () =>{
-            try {
-                await apiRequest.put('/chats/read/' + chat.id)
-            } catch (error) {
-                console.log(error);
+    useEffect(() => {
+        const read = async () => {
+          try {
+            await apiRequest.put("/chats/read/" + chat.id);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+    
+        if (chat && socket) {
+          socket.on("getMessage", (data) => {
+            if (chat.id === data.chatId) {
+              setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
+              read();
             }
+          });
         }
-
-        if(chat &&socket){
-            socket.on('getMessage',(data) =>{
-                if(chat.id === data.chatId){
-                    setChat(prev =>({...prev, messages:[...prev.messages, data]}));
-                    read();
-                }
-            })
-        }
-    },[chat,socket])
+        return () => {
+          socket.off("getMessage");
+        };
+      }, [socket, chat]);
 
     return (
         <div className='chat'>

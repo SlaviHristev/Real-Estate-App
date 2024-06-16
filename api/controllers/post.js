@@ -30,6 +30,7 @@ export const getPosts = async (req, res) => {
 
   export const getPost = async (req, res) => {
     const id = req.params.id;
+  
     try {
       const post = await prisma.post.findUnique({
         where: { id },
@@ -44,27 +45,35 @@ export const getPosts = async (req, res) => {
         },
       });
   
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+  
       const token = req.cookies?.token;
   
       if (token) {
         jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
-          if (!err) {
-            const saved = await prisma.savedPost.findUnique({
-              where: {
-                userId_postId: {
-                  postId: id,
-                  userId: payload.id,
-                },
-              },
-            });
-            res.status(200).json({ ...post, isSaved: saved ? true : false });
+          if (err) {
+            return res.status(200).json({ ...post, isSaved: false });
           }
+          
+          const saved = await prisma.savedPost.findUnique({
+            where: {
+              userId_postId: {
+                postId: id,
+                userId: payload.id,
+              },
+            },
+          });
+          
+          return res.status(200).json({ ...post, isSaved: saved ? true : false });
         });
+      } else {
+        return res.status(200).json({ ...post, isSaved: false });
       }
-      res.status(200).json({ ...post, isSaved: false });
     } catch (err) {
       console.log(err);
-      res.status(500).json({ message: "Failed to get post" });
+      return res.status(500).json({ message: "Failed to get post" });
     }
   };
 
